@@ -75,7 +75,7 @@
             </div>
             <div class="body-content">
                 <router-view v-slot="{ Component }">
-                    <component ref="routerViewRef" :is="Component" @addFile="addFile"></component>
+                    <component ref="routerViewRef" :is="Component" @addFile="addFile" @reload="reload"></component>
                 </router-view>
             </div>
         </div>
@@ -269,6 +269,10 @@
             return
         }
         useSpaceInfo.value = result.data
+    }
+
+    const reload = () => {
+        getUseSpace()
     }
 
     watch(
