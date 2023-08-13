@@ -200,6 +200,7 @@
         formdataRef.value.resetFields()
         changeCheckCode(0)
     }
+    
     const loginOrUpdateOrRegister = () => {
         formdataRef.value.validate((validate) => {
             if (validate) {

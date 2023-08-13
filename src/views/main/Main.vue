@@ -63,8 +63,8 @@
                         </div>
                         <span class="op">
                             <template v-if="row.showOp && row.fileId && row.status == 2">
-                                <span class="iconfont icon-share1">分享</span>
-                                <span class="iconfont icon-download" v-if="row.folderype == 0">下载</span>
+                                <span class="iconfont icon-share1" >分享</span>
+                                <span class="iconfont icon-download" v-if="row.folderType == 0" @click="downloadFile(row)">下载</span>
                                 <span class="iconfont icon-del" @click="delFile(row)">删除</span>
                                 <span class="iconfont icon-edit" @click="editFileName(index)">重命名</span>
                                 <span class="iconfont icon-move" @click="moveFolder">移动</span>
@@ -285,6 +285,19 @@
             }
             loadDataList()
         })
+    }
+
+    const downloadFile = async (row) => {
+        let result = await proxy.Request({
+            url: '/file/createDownLoadUrl',
+            params: {
+                fileId: row.fileId
+            }
+        })
+        if(!result) {
+            return
+        }
+        window.location.href = "/api/file/download"+ "/" + result.data
     }
 
     const moveFolderBatch = () => {
