@@ -20,19 +20,26 @@ import NoData from '@/components/NoData.vue'
 import Dialog from '@/components/Dialog.vue'
 import FolderSelect from '@/components/FolderSelect.vue'
 import Navigation from '@/components/Navigation.vue'
+import ShareFile from '@/views/main/ShareFile.vue'
+import Preview from '@/components/preview/Preview.vue'
+import Window from '@/components/Window.vue'
 
 const app = createApp(App)
 
 app.use(router)
 app.use(ElementPlus)
 
-app.component("Avatar",Avatar)
-app.component("Table",Table)
-app.component("Icon",Icon)
-app.component("NoData",NoData)
-app.component("Dialog",Dialog)
-app.component("FolderSelect",FolderSelect)
-app.component("Navigation",Navigation)
+app.component("Avatar", Avatar)
+app.component("Table", Table)
+app.component("Icon", Icon)
+app.component("NoData", NoData)
+app.component("Dialog", Dialog)
+app.component("FolderSelect", FolderSelect)
+app.component("Navigation", Navigation)
+app.component("ShareFile", ShareFile)
+app.component("Preview", Preview)
+app.component("Window", Window)
+
 
 app.config.globalProperties.Verify = Verify
 app.config.globalProperties.Request = Request

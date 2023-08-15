@@ -80,7 +80,7 @@
   defineExpose({
     submitAvatar
   })
-
+  
 </script>
 
 <style scoped>

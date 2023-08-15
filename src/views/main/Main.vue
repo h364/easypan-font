@@ -46,7 +46,7 @@
                             <Icon v-if="row.folderType == 0" :fileType="row.fileType"></Icon>
                             <Icon v-if="row.folderType == 1" :fileType="0"></Icon>
                         </template>
-                        <span class="file-name" :title="row.fileNmae" v-if="!row.showEdit">
+                        <span class="file-name" :title="row.fileName" v-if="!row.showEdit">
                             <span @click="preview(row)">{{row.fileName}}</span>
                             <span v-if="row.status == 0" class="transfer-status">转码中</span>
                             <span v-if="row.status == 1" class="transfer-status transfer-fail">转码失败</span>
@@ -63,8 +63,9 @@
                         </div>
                         <span class="op">
                             <template v-if="row.showOp && row.fileId && row.status == 2">
-                                <span class="iconfont icon-share1" >分享</span>
-                                <span class="iconfont icon-download" v-if="row.folderType == 0" @click="downloadFile(row)">下载</span>
+                                <span class="iconfont icon-share1" @click="share(row)">分享</span>
+                                <span class="iconfont icon-download" v-if="row.folderType == 0"
+                                    @click="downloadFile(row)">下载</span>
                                 <span class="iconfont icon-del" @click="delFile(row)">删除</span>
                                 <span class="iconfont icon-edit" @click="editFileName(index)">重命名</span>
                                 <span class="iconfont icon-move" @click="moveFolder">移动</span>
@@ -77,7 +78,9 @@
                 </template>
             </Table>
         </div>
+        <Preview ref="previewRef"> </Preview>
         <FolderSelect ref="folderSelectRef" @folderSelect="moveFolderDone"></FolderSelect>
+        <ShareFile ref="shareFileRef"></ShareFile>
     </div>
 </template>
 
@@ -116,6 +119,8 @@
     const currentMoveFile = ref({})
     const navigationRef = ref()
     const showLoading = ref(true)
+    const shareFileRef = ref()
+    const previewRef = ref()
 
     const tableOptions = ref({
         extHeight: 50,
@@ -294,10 +299,14 @@
                 fileId: row.fileId
             }
         })
-        if(!result) {
+        if (!result) {
             return
         }
-        window.location.href = "/api/file/download"+ "/" + result.data
+        window.location.href = "/api/file/download" + "/" + result.data
+    }
+
+    const share = (row) => {
+        shareFileRef.value.show(row)
     }
 
     const moveFolderBatch = () => {
@@ -339,6 +348,11 @@
         if (data.folderType == 1) {
             navigationRef.value.openFolder(data)
         }
+        if (data.status != 2) {
+            proxy.Message.warning("文件正在转码中，无法预览")
+            return
+        }
+        previewRef.value.showPreview(data, 0)
     }
 
     const navChange = (data) => {

@@ -96,7 +96,7 @@
     const getNavigationFolder = async (path) => {
         let url = "/file/getFolderInfo"
         if (props.shareId) {
-            url = "/file/getFolderInfo4Share"
+            url = "/file/getFolderInfo"
         }
         if (props.adminShow) {
             url = "/file/getFolderInfo4Admin"
@@ -128,7 +128,9 @@
             if (!props.watchPath) {
                 return
             }
-            if (newVal.path.indexOf("/main") === -1) {
+            if (newVal.path.indexOf("/main") === -1 &&
+                newVal.path.indexOf("/settings/fileList") === -1 &&
+                newVal.path.indexOf("/share") === -1) {
                 return
             }
             const path = newVal.query.path
