@@ -74,6 +74,11 @@ const request = (config) => {
     const { url, params, dataType, showLoading = true, responseType = responseTypeJson } = config;
     let contentType = contentTypeForm;
     let formData = new FormData();// 创建form对象
+    let token = "";
+    let userInfo = localStorage.getItem("userInfo") ? JSON.parse(localStorage.getItem("userInfo")) : null;
+    if(userInfo) {
+        token = userInfo.token;
+    }
     for (let key in params) {
         formData.append(key, params[key] == undefined ? "" : params[key]);
     }
@@ -83,6 +88,7 @@ const request = (config) => {
     let headers = {
         'Content-Type': contentType,
         'X-Requested-With': 'XMLHttpRequest',
+        'token': token,
     }
 
     return instance.post(url, formData, {

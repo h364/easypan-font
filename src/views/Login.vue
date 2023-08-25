@@ -216,7 +216,6 @@
     }
 
     const login = async () => {
-        console.log(formdata.value.rememberMe);
         let result = await proxy.Request({
             url: '/userInfo/login',
             params: {
@@ -227,11 +226,13 @@
             errorCallback: () => {
                 changeCheckCode(1)
             }
+        
         })
         if (!result) {
             return
         }
         proxy.VueCookies.set("userInfo", result.data, 0)
+        localStorage.setItem("userInfo", JSON.stringify(result.data))
         const loginInfo = {
             email: formdata.value.email,
             password: formdata.value.password,

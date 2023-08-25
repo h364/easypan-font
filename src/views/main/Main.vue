@@ -15,11 +15,11 @@
                     <span class="iconfont icon-folder-add"></span>
                     新建文件夹
                 </el-button>
-                <el-button type="danger" :disabled="selectFileIdList == 0" @click="delFileBatch">
+                <el-button type="danger" :disabled="selectFileIdList.length == 0" @click="delFileBatch">
                     <span class="iconfont icon-del"></span>
                     批量删除
                 </el-button>
-                <el-button type="warning" :disabled="selectFileIdList == 0" @click="moveFolderBatch">
+                <el-button type="warning" :disabled="selectFileIdList.length == 0" @click="moveFolderBatch">
                     <span class="iconfont icon-move"></span>
                     批量移动
                 </el-button>
@@ -149,6 +149,7 @@
         tableData.value = result.data
     }
     const rowSelected = (row) => {
+        selectFileIdList.value = []
         row.forEach(item => {
             selectFileIdList.value.push(item.fileId)
         })

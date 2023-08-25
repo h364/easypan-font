@@ -2,7 +2,7 @@
   <div class="music">
     <div class="body-content">
       <div class="cover">
-        <img src="@/assets/music_cover.png" />
+        <img src="@/assets/icon-image/music.png" />
       </div>
       <div ref="playerRef" class="music-player"></div>
     </div>

@@ -234,19 +234,24 @@
                     currentFile.uploadProgress = Math.floor((currentFile.uploadSize / fileSize) * 100)
                 }
             })
-            if(!uploadResult) {
+            if (!uploadResult) {
                 break
             }
             console.log(uploadResult);
             currentFile.fileId = uploadResult.data.fileId
             currentFile.status = STATUS[uploadResult.data.status].value
             currentFile.chunkIndex = i
-            if(uploadResult.data.status == STATUS.upload_seconds.value || uploadResult.data.status == STATUS.upload_finish.value) {
+            if (uploadResult.data.status == STATUS.upload_seconds.value || uploadResult.data.status == STATUS.upload_finish.value) {
                 currentFile.uploadProgress = 100
                 emit("uploadCallBack")
                 break
             }
         }
+    }
+
+    const delUpload = (uid, index) => {
+        delList.value.push(uid)
+        fileList.value.splice(index, 1)
     }
 
     defineExpose({
